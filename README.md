@@ -79,6 +79,7 @@ resources:
 | Name              | Type      | Requirement  | Description                                                 |
 | ----------------- | --------- | ------------ | ----------------------------------------------------------- |
 | show              | `boolean` | **Optional** | Show/Hide button `true`                                     |
+| icon              | `string`  | **Optional** | Icon to use on the button                                   |
 | tap_action        | `map`     | **Optional** | Tap action map [See action options](#action-options)        |
 | hold_action       | `map`     | **Optional** | Hold action map [See action options](#action-options)       |
 | double_tap_action | `map`     | **Optional** | Doulbe Tap action map [See action options](#action-options) |

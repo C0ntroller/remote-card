@@ -28,6 +28,7 @@ export interface RokuCardConfig {
 
 export interface ActionButtonConfig {
   show?: boolean;
+  icon?: string;
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
