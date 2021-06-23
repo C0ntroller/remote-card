@@ -92,12 +92,17 @@ export class RokuCard extends LitElement {
             ${this._renderImage(2)} ${this._renderButton('down', 'mdi:chevron-down', 'Down')} ${this._renderImage(3)}
           </div>
 
-          <div class="row">
-            ${this._renderButton('reverse', 'mdi:rewind', 'Rewind')}
-            ${this._renderButton('play', 'mdi:play-pause', 'Play/Pause')}
-            ${this._renderButton('forward', 'mdi:fast-forward', 'Fast-Forward')}
-          </div>
-
+          ${(this._config.reverse && this._config.reverse.show) ||
+          (this._config.play && this._config.play.show) ||
+          (this._config.forward && this._config.forward.show)
+            ? html`
+                <div class="row">
+                  ${this._renderButton('reverse', 'mdi:rewind', 'Rewind')}
+                  ${this._renderButton('play', 'mdi:play-pause', 'Play/Pause')}
+                  ${this._renderButton('forward', 'mdi:fast-forward', 'Fast-Forward')}
+                </div>
+              `
+            : ''}
           ${this._config.tv ||
           (this._config.volume_mute && this._config.volume_mute.show) ||
           (this._config.volume_down && this._config.volume_down.show) ||
