@@ -67,16 +67,20 @@ export class RokuCard extends LitElement {
     return html`
       <ha-card .header="${this._config.name}">
         <div class="remote">
-          <div class="row">
-            ${stateObj?.attributes?.app_name
-              ? html`
-                  <div class="app">${stateObj.attributes.app_name}</div>
-                `
-              : ''}
-            ${this._config.tv || (this._config.power && this._config.power.show)
-              ? this._renderButton('power', 'mdi:power', 'Power')
-              : ''}
-          </div>
+          ${stateObj?.attributes?.app_name || this._config.tv || (this._config.power && this._config.power.show)
+            ? html`
+                <div class="row">
+                  ${stateObj?.attributes?.app_name
+                    ? html`
+                        <div class="app">${stateObj.attributes.app_name}</div>
+                      `
+                    : ''}
+                  ${this._config.tv || (this._config.power && this._config.power.show)
+                    ? this._renderButton('power', 'mdi:power', 'Power')
+                    : ''}
+                </div>
+              `
+            : ''}
           ${(this._config.back && this._config.back.show !== false) ||
           (this._config.info && this._config.info.show !== false) ||
           (this._config.home && this._config.home.show !== false)
