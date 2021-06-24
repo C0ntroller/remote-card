@@ -73,7 +73,9 @@ export class RokuCard extends LitElement {
               ? this._renderButton('power', 'mdi:power', 'Power')
               : ''}
           </div>
-          ${this._config.back?.show || this._config.info?.show || this._config.home?.show
+          ${(this._config.back && this._config.back.show !== false) ||
+          (this._config.info && this._config.info.show !== false) ||
+          (this._config.home && this._config.home.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderButton('back', 'mdi:arrow-left', 'Back')}
@@ -82,14 +84,16 @@ export class RokuCard extends LitElement {
                 </div>
               `
             : ''}
-          ${(this._config.apps && this._config.apps.length > 0) || this._config.up?.show
+          ${(this._config.apps && this._config.apps.length > 0) || (this._config.up && this._config.up.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderImage(0)} ${this._renderButton('up', 'mdi:chevron-up', 'Up')} ${this._renderImage(1)}
                 </div>
               `
             : ''}
-          ${this._config.left?.show || this._config.select?.show || this._config.right?.show
+          ${(this._config.left && this._config.left.show !== false) ||
+          (this._config.select && this._config.select.show !== false) ||
+          (this._config.right && this._config.right?.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderButton('left', 'mdi:chevron-left', 'Left')}
@@ -98,7 +102,8 @@ export class RokuCard extends LitElement {
                 </div>
               `
             : ''}
-          ${(this._config.apps && this._config.apps.length > 2) || this._config.down?.show
+          ${(this._config.apps && this._config.apps.length > 2) ||
+          (this._config.down && this._config.down.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderImage(2)} ${this._renderButton('down', 'mdi:chevron-down', 'Down')}
@@ -106,7 +111,9 @@ export class RokuCard extends LitElement {
                 </div>
               `
             : ''}
-          ${this._config.reverse?.show || this._config.play?.show || this._config.forward?.show
+          ${(this._config.reverse && this._config.reverse.show !== false) ||
+          (this._config.play && this._config.play.show !== false) ||
+          (this._config.forward && this._config.forward?.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderButton('reverse', 'mdi:rewind', 'Rewind')}
@@ -116,9 +123,9 @@ export class RokuCard extends LitElement {
               `
             : ''}
           ${this._config.tv ||
-          this._config.volume_mute?.show ||
-          this._config.volume_down?.show ||
-          this._config.volume_up?.show
+          (this._config.volume_mute && this._config.volume_mute.show !== false) ||
+          (this._config.volume_down && this._config.volume_down.show !== false) ||
+          (this._config.volume_up && this._config.volume_up.show !== false)
             ? html`
                 <div class="row">
                   ${this._renderButton('volume_mute', 'mdi:volume-mute', 'Volume Mute')}
@@ -225,21 +232,21 @@ export class RokuCard extends LitElement {
   private _renderButton(button: string, icon: string, title: string): TemplateResult {
     if (this._config) {
       const config = this._config[button];
-      return config && config.show === true
+      return config && config.show === false
         ? html`
+            <ha-icon-button></ha-icon-button>
+          `
+        : html`
             <ha-icon-button
               .button=${button}
-              icon=${config.icon ? config.icon : icon}
-              title=${config.title ? config.title : title}
+              icon=${config && config.icon ? config.icon : icon}
+              title=${config && config.title ? config.title : title}
               @action=${this._handleAction}
               .actionHandler=${actionHandler({
                 hasHold: config && hasAction(config.hold_action),
                 hasDoubleClick: config && hasAction(config.double_tap_action),
               })}
             ></ha-icon-button>
-          `
-        : html`
-            <ha-icon-button></ha-icon-button>
           `;
     } else {
       return html``;
