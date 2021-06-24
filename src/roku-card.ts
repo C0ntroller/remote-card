@@ -230,7 +230,7 @@ export class RokuCard extends LitElement {
             <ha-icon-button
               .button=${button}
               icon=${config.icon ? config.icon : icon}
-              title=${title}
+              title=${config.title ? config.title : title}
               @action=${this._handleAction}
               .actionHandler=${actionHandler({
                 hasHold: config && hasAction(config.hold_action),
