@@ -73,28 +73,40 @@ export class RokuCard extends LitElement {
               ? this._renderButton('power', 'mdi:power', 'Power')
               : ''}
           </div>
-          <div class="row">
-            ${this._renderButton('back', 'mdi:arrow-left', 'Back')}
-            ${this._renderButton('info', 'mdi:asterisk', 'Info')} ${this._renderButton('home', 'mdi:home', 'Home')}
-          </div>
-
-          <div class="row">
-            ${this._renderImage(0)} ${this._renderButton('up', 'mdi:chevron-up', 'Up')} ${this._renderImage(1)}
-          </div>
-
-          <div class="row">
-            ${this._renderButton('left', 'mdi:chevron-left', 'Left')}
-            ${this._renderButton('select', 'mdi:checkbox-blank-circle', 'Select')}
-            ${this._renderButton('right', 'mdi:chevron-right', 'Right')}
-          </div>
-
-          <div class="row">
-            ${this._renderImage(2)} ${this._renderButton('down', 'mdi:chevron-down', 'Down')} ${this._renderImage(3)}
-          </div>
-
-          ${(this._config.reverse && this._config.reverse.show) ||
-          (this._config.play && this._config.play.show) ||
-          (this._config.forward && this._config.forward.show)
+          ${this._config.back?.show || this._config.info?.show || this._config.home?.show
+            ? html`
+                <div class="row">
+                  ${this._renderButton('back', 'mdi:arrow-left', 'Back')}
+                  ${this._renderButton('info', 'mdi:asterisk', 'Info')}
+                  ${this._renderButton('home', 'mdi:home', 'Home')}
+                </div>
+              `
+            : ''}
+          ${(this._config.apps && this._config.apps.length > 0) || this._config.up?.show
+            ? html`
+                <div class="row">
+                  ${this._renderImage(0)} ${this._renderButton('up', 'mdi:chevron-up', 'Up')} ${this._renderImage(1)}
+                </div>
+              `
+            : ''}
+          ${this._config.left?.show || this._config.select?.show || this._config.right?.show
+            ? html`
+                <div class="row">
+                  ${this._renderButton('left', 'mdi:chevron-left', 'Left')}
+                  ${this._renderButton('select', 'mdi:checkbox-blank-circle', 'Select')}
+                  ${this._renderButton('right', 'mdi:chevron-right', 'Right')}
+                </div>
+              `
+            : ''}
+          ${(this._config.apps && this._config.apps.length > 2) || this._config.down?.show
+            ? html`
+                <div class="row">
+                  ${this._renderImage(2)} ${this._renderButton('down', 'mdi:chevron-down', 'Down')}
+                  ${this._renderImage(3)}
+                </div>
+              `
+            : ''}
+          ${this._config.reverse?.show || this._config.play?.show || this._config.forward?.show
             ? html`
                 <div class="row">
                   ${this._renderButton('reverse', 'mdi:rewind', 'Rewind')}
@@ -104,9 +116,9 @@ export class RokuCard extends LitElement {
               `
             : ''}
           ${this._config.tv ||
-          (this._config.volume_mute && this._config.volume_mute.show) ||
-          (this._config.volume_down && this._config.volume_down.show) ||
-          (this._config.volume_up && this._config.volume_up.show)
+          this._config.volume_mute?.show ||
+          this._config.volume_down?.show ||
+          this._config.volume_up?.show
             ? html`
                 <div class="row">
                   ${this._renderButton('volume_mute', 'mdi:volume-mute', 'Volume Mute')}
@@ -206,11 +218,8 @@ export class RokuCard extends LitElement {
   private _renderButton(button: string, icon: string, title: string): TemplateResult {
     if (this._config) {
       const config = this._config[button];
-      return config && config.show === false
+      return config && config.show === true
         ? html`
-            <ha-icon-button></ha-icon-button>
-          `
-        : html`
             <ha-icon-button
               .button=${button}
               icon=${config.icon ? config.icon : icon}
@@ -221,6 +230,9 @@ export class RokuCard extends LitElement {
                 hasDoubleClick: config && hasAction(config.double_tap_action),
               })}
             ></ha-icon-button>
+          `
+        : html`
+            <ha-icon-button></ha-icon-button>
           `;
     } else {
       return html``;
