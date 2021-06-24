@@ -148,7 +148,7 @@ export class RokuCard extends LitElement {
   static get styles(): CSSResult {
     return css`
       .remote {
-        padding: 16px 0px 16px 0px;
+        padding: 16px 0 16px 0;
       }
       img,
       ha-icon-button {
@@ -273,8 +273,8 @@ export class RokuCard extends LitElement {
               },
               ...config,
             },
-        ev.detail.action === 'hold' ? true : false,
-        ev.detail.action === 'double_tap' ? true : false,
+        ev.detail.action === 'hold',
+        ev.detail.action === 'double_tap',
       );
     }
   }
