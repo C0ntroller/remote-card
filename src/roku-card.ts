@@ -127,6 +127,13 @@ export class RokuCard extends LitElement {
                 </div>
               `
             : ''}
+          ${this._config.extra_buttons && this._config.extra_buttons.length > 0
+            ? html`
+                <div class="row">
+                  ${this._renderExtraButton(0)}${this._renderExtraButton(1)}${this._renderExtraButton(2)}
+                </div>
+              `
+            : ''}
         </div>
       </ha-card>
     `;
@@ -237,6 +244,32 @@ export class RokuCard extends LitElement {
     } else {
       return html``;
     }
+  }
+
+  private _renderExtraButton(index: number): TemplateResult {
+    if (!this._config) return html``;
+    if (!this._config.extra_buttons || this._config.extra_buttons.length - 1 < index)
+      return html`
+        <ha-icon-button></ha-icon-button>
+      `;
+
+    const config = this._config.extra_buttons[index];
+    return config && config.show
+      ? html`
+          <ha-icon-button
+            .button=${config.title}
+            icon=${config.icon}
+            title=${config.title}
+            @action=${this._handleAction}
+            .actionHandler=${actionHandler({
+              hasHold: config && hasAction(config.hold_action),
+              hasDoubleClick: config && hasAction(config.double_tap_action),
+            })}
+          ></ha-icon-button>
+        `
+      : html`
+          <ha-icon-button></ha-icon-button>
+        `;
   }
 
   private _handleAction(ev): void {
