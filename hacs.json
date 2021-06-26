@@ -1,5 +1,5 @@
 {
-    "name": "Roku Card",
+    "name": "Remote Card",
     "render_readme": true,
     "homeassistant": "0.110.0"
 }
