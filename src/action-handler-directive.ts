@@ -1,4 +1,4 @@
-import { directive, PropertyPart } from 'lit-html';
+import { directive, PropertyPart } from 'lit-html/lit-html';
 
 import { fireEvent, ActionHandlerDetail, ActionHandlerOptions } from 'custom-card-helpers';
 
@@ -161,15 +161,15 @@ class ActionHandler extends HTMLElement implements ActionHandler {
   }
 }
 
-customElements.define('action-handler-roku-card', ActionHandler);
+customElements.define('action-handler-remote-card', ActionHandler);
 
 const getActionHandler = (): ActionHandler => {
   const body = document.body;
-  if (body.querySelector('action-handler-roku-card')) {
-    return body.querySelector('action-handler-roku-card') as ActionHandler;
+  if (body.querySelector('action-handler-remote-card')) {
+    return body.querySelector('action-handler-remote-card') as ActionHandler;
   }
 
-  const actionhandler = document.createElement('action-handler-roku-card');
+  const actionhandler = document.createElement('action-handler-remote-card');
   body.appendChild(actionhandler);
 
   return actionhandler as ActionHandler;

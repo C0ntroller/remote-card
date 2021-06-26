@@ -1,46 +1,33 @@
 import { ActionConfig } from 'custom-card-helpers';
 
-export interface RokuCardConfig {
-  type: string;
+export interface RemoteCardConfig {
+  type: 'custom:remote-card';
   entity: string;
-  remote?: string;
-  name?: string;
-  theme?: string;
-  tv?: boolean;
-  power: ActionButtonConfig;
-  volume_up: ActionButtonConfig;
-  volume_down: ActionButtonConfig;
-  volume_mute: ActionButtonConfig;
-  up: ActionButtonConfig;
-  down: ActionButtonConfig;
-  left: ActionButtonConfig;
-  right: ActionButtonConfig;
-  home: ActionButtonConfig;
-  info: ActionButtonConfig;
-  back: ActionButtonConfig;
-  select: ActionButtonConfig;
-  reverse: ActionButtonConfig;
-  play: ActionButtonConfig;
-  forward: ActionButtonConfig;
-  apps?: AppConfig[];
-  extra_buttons?: ActionButtonConfig[];
-  haptic?: string;
-}
-
-export interface ActionButtonConfig {
-  show?: boolean;
-  icon?: string;
   title?: string;
-  tap_action?: ActionConfig;
-  hold_action?: ActionConfig;
-  double_tap_action?: ActionConfig;
+  device?: string;
+  theme?: string;
+  haptic?: string;
+  buttons: RemoteButtonRow[];
 }
 
-export interface AppConfig {
-  app?: string;
-  image?: string;
+export interface RemoteButtonRow {
+  row: RemoteButton[];
+}
+
+export type RemoteButton = EmptyRemoteButton | ActionRemoteButton;
+
+export interface ActionRemoteButton {
   icon?: string;
-  tap_action?: ActionConfig;
-  hold_action?: ActionConfig;
-  double_tap_action?: ActionConfig;
+  image?: string;
+  title?: string;
+  remote_command?: string;
+  actions?: {
+    tap_action?: ActionConfig;
+    hold_action?: ActionConfig;
+    double_tap_action?: ActionConfig;
+  };
+}
+
+export interface EmptyRemoteButton {
+  empty: true;
 }

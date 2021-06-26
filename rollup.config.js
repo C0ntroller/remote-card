@@ -32,7 +32,7 @@ const plugins = [
 
 export default [
   {
-    input: 'src/roku-card.ts',
+    input: 'src/remote-card.ts',
     output: {
       dir: 'dist',
       format: 'es',
