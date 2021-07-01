@@ -11,7 +11,7 @@
     "custom-cards"
   ],
   "module": "remote-card.js",
-  "repository": "git@github.com:C0ntroller/roku-card.git",
+  "repository": "git@github.com:C0ntroller/remote-card.git",
   "author": "C0ntroller",
   "license": "MIT",
   "dependencies": {
