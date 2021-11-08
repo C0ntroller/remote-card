@@ -103,10 +103,10 @@ export class RemoteCard extends LitElement {
         padding: 16px 0 16px 0;
       }
       img,
-      ha-icon-button {
+      ha-icon {
         cursor: pointer;
       }
-      ha-icon-button {
+      ha-icon {
         --mdc-icon-button-size: 64px;
         --mdc-icon-size: 48px;
       }
@@ -137,7 +137,7 @@ export class RemoteCard extends LitElement {
   private _renderButton(button: RemoteButton): TemplateResult {
     if ('empty' in button && button.empty) {
       return html`
-        <ha-icon-button></ha-icon-button>
+        <ha-icon icon="mdi:none"></ha-icon>
       `;
     }
     button = button as ActionRemoteButton;
@@ -163,7 +163,6 @@ export class RemoteCard extends LitElement {
     return html`
       <ha-icon-button
         .button=${button}
-        icon=${button.icon || 'mdi:radiobox-marked'}
         title=${button.title || ''}
         .action_config=${actionConfig}
         @action=${this._handleAction}
@@ -171,7 +170,9 @@ export class RemoteCard extends LitElement {
           hasHold: hasAction(button.actions?.hold_action),
           hasDoubleClick: hasAction(button.actions?.double_tap_action),
         })}
-      ></ha-icon-button>
+      >
+        <ha-icon .icon=${button.icon || 'mdi:radiobox-marked'}></ha-icon>
+      </ha-icon-button>
     `;
   }
 
